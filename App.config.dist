@@ -3,7 +3,7 @@
 	<connectionStrings>
 		<add
 		name="BombsDb"
-		connectionString="server=localhost:3308;database=sqlBombDisposal;uid=root;pwd=password;"
+		connectionString=""
 			providerName="MySql.Data.MySqlClient"
 	/>
 	</connectionStrings>

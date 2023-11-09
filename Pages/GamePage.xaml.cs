@@ -23,13 +23,6 @@ namespace SQLBombDisposal.Pages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private Bomb? currentBomb = null;
-        public Bomb? CurrentBomb
-        {
-            get { return currentBomb; }
-            set { currentBomb = value; OnPropertyChanged(); }
-        }
-
         #endregion
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private TimeSpan elapsedTime = TimeSpan.Zero;
@@ -41,7 +34,6 @@ namespace SQLBombDisposal.Pages
             InitializeComponent();
 
             LoadPuzzle();
-            GetBombContext();
 
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
@@ -75,14 +67,6 @@ namespace SQLBombDisposal.Pages
             t.TimePenalty += HandleTimePenalty;
             puzzleFrame.NavigationService.Navigate(t);
 
-        }
-
-        private void GetBombContext()
-        {
-            using (BombsContext context = new BombsContext())
-            {
-                currentBomb = context.Bombs.First();
-            }
         }
 
         /**

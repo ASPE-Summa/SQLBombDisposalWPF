@@ -1,4 +1,5 @@
 ﻿using SQLBombDisposal.Models;
+using SQLBombDisposal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace SQLBombDisposal.Pages.Puzzles
             InitializeComponent();
             maze = new List<List<char>>();
 
-            using (BombsContext context = new BombsContext())
+            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
             {
                 Random r = new Random();
                 int maxPattern = context.MazePuzzles.Max(p => p.Pattern) + 1;
@@ -47,7 +48,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         private void ResetMaze()
         {
             maze.Clear();
-            using (BombsContext context = new BombsContext())
+            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
             {
                 foreach (MazePuzzle row in context.MazePuzzles.Where(p => p.Pattern == pattern).OrderBy(p => p.Sequence))
                 {
@@ -55,7 +56,7 @@ namespace SQLBombDisposal.Pages.Puzzles
                     if (characterList.Contains(playerCharacter))
                     {
                         xPos = characterList.IndexOf(playerCharacter);
-                        yPos = row.Sequence-1;
+                        yPos = row.Sequence - 1;
                     }
                     maze.Add(characterList);
                 }
@@ -105,9 +106,9 @@ namespace SQLBombDisposal.Pages.Puzzles
                     break;
             }
 
-            if(newXPos > maze[0].Count || newXPos < 0 || newYPos > maze.Count || newYPos < 0 || maze[newYPos][newXPos] == wallCharacter) {
+            if(newXPos > maze[0].Count || newXPos < 0 || newYPos >= maze.Count || newYPos < 0 || maze[newYPos][newXPos] == wallCharacter) {
                 TimePenalty?.Invoke(this, EventArgs.Empty);
-                MessageBox.Show("sneue loser");
+                MessageBox.Show("Helaas de resterende tijd is verlaagd.");
                 ResetMaze();
                 return;
             }

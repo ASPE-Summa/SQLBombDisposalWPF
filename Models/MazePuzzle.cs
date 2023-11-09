@@ -5,7 +5,9 @@ namespace SQLBombDisposal.Models;
 
 public partial class MazePuzzle
 {
-    public string? Contents { get; set; }
+    public int Id { get; set; }
+
+    public string Contents { get; set; } = null!;
 
     public int Pattern { get; set; }
 

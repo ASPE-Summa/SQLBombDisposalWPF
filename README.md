@@ -1,4 +1,1 @@
-Scaffold-DbContext "DataSource=.\Database\bombs.db" Microsoft.EntityFrameworkCore.Sqlite -Force -OutputDir Models
-
-
-Once its ready, make it use a connectionstring for context instead of directly the DataSource
+Scaffold-DbContext "Server=127.0.0.1; Port=3308; Database=sqlBombDisposal; Uid=root; Pwd=password;" MySql.EntityFrameworkCore -OutputDir Models
