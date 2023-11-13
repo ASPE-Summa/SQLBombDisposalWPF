@@ -1,6 +1,8 @@
-﻿using SQLBombDisposal.Models;
+﻿using SQLBombDisposal.Classes;
+using SQLBombDisposal.Models;
 using SQLBombDisposal.Pages.Puzzles;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,34 +25,77 @@ namespace SQLBombDisposal.Pages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        private string currentTime = string.Empty;
+
+        public string CurrentTime
+        {
+            get { return currentTime; }
+            set { currentTime = value; OnPropertyChanged(); }
+        }
+
+        private int puzzlesTotal;
+        public int PuzzlesTotal
+        {
+            get { return puzzlesTotal; }
+            set { puzzlesTotal = value; OnPropertyChanged(); }
+        }
+
+        private int puzzlesCompleted;
+        public int PuzzlesCompleted
+        {
+            get { return puzzlesCompleted; }
+            set { puzzlesCompleted = value; OnPropertyChanged(); }
+        }
+
+        private int timePenalty;
+        public int TimePenalty
+        {
+            get { return timePenalty; }
+            set { timePenalty = value; OnPropertyChanged(); }
+        }
+
         #endregion
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private TimeSpan elapsedTime = TimeSpan.Zero;
-        private string currentTime = string.Empty;
-        private int timePenalty = 5;
+
+        private List<IPuzzle> puzzles;
+        private IPuzzle? puzzle = null;
 
         public GamePage()
         {
             InitializeComponent();
 
+            puzzles = new List<IPuzzle>();
+
+            FillPuzzleList();
             LoadPuzzle();
+
+            PuzzlesTotal = 1;
+            PuzzlesCompleted = 0;
+            TimePenalty = 5;
+            CurrentTime = "05:00";
 
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
-
             dispatcherTimer.Start();
 
             DataContext = this;
+        }
+
+        private void FillPuzzleList()
+        {
+            puzzles.Add(new MazePuzzlePage());
+            puzzles.Add(new ButtonPuzzlePage());
+            Shuffler.Shuffle(puzzles);
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             elapsedTime += dispatcherTimer.Interval;
             TimeSpan ts = TimeSpan.FromMinutes(5).Subtract(elapsedTime);
-            currentTime = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+            CurrentTime = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
 
-            tbTimer.Text = currentTime;
-            if (ts.Minutes == 0 && ts.Seconds == 0)
+            if (ts.Minutes <= 0 && ts.Seconds <= 0)
             {
                 dispatcherTimer.Stop();
 
@@ -61,12 +106,25 @@ namespace SQLBombDisposal.Pages
 
         private void LoadPuzzle()
         {
-            IPuzzle t = new MazePuzzlePage();
+            if(puzzle != null)
+            {
+                puzzle.PuzzleCompleted -= HandleCompletion;
+                puzzle.Penalize -= HandleTimePenalty;
+            }
+            if (puzzles.Count == 0)
+            {
+                MessageBox.Show("Congratulations, you have beaten the game");
+                Application.Current.Shutdown();
+                return;
+            }
 
-            t.PuzzleCompleted += HandleCompletion;
-            t.TimePenalty += HandleTimePenalty;
-            puzzleFrame.NavigationService.Navigate(t);
+            puzzle = puzzles.First();            
+            puzzles.Remove(puzzle);
 
+            puzzle.PuzzleCompleted += HandleCompletion;
+            puzzle.Penalize += HandleTimePenalty;
+
+            puzzleFrame.NavigationService.Navigate(puzzle);
         }
 
         /**
@@ -75,12 +133,13 @@ namespace SQLBombDisposal.Pages
         private void HandleCompletion(object? sender, EventArgs e)
         {
             MessageBox.Show("Recieved Completion Event");
+            LoadPuzzle();
         }
 
         private void HandleTimePenalty(object? sender, EventArgs e)
         {
-            elapsedTime += TimeSpan.FromSeconds(timePenalty);
-            timePenalty += 5;
+            elapsedTime += TimeSpan.FromSeconds(TimePenalty);
+            TimePenalty += 5;
         }
     }
 }

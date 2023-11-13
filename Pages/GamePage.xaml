@@ -37,17 +37,21 @@
         <Image Source="../Assets/bomb.png" Grid.Row="2" Grid.Column="1"></Image>
         <Border Grid.Row="3" Grid.Column="1" Background="Black" Margin="0,10,0,10">
             <Viewbox>
-                <TextBlock x:Name="tbTimer" Foreground="Red">05:00</TextBlock>
+                <TextBlock x:Name="tbTimer" Foreground="Red" Text="{Binding CurrentTime}"></TextBlock>
             </Viewbox>
         </Border>
         <StackPanel Grid.Row="4" Grid.Column="1" Margin="10,10,10,0" Background="DarkGray">
             <StackPanel Orientation="Horizontal">
-                <TextBlock>Lorum:</TextBlock>
-                <TextBlock Text="}"></TextBlock>
+                <TextBlock>Puzzles total:</TextBlock>
+                <TextBlock Text="{Binding PuzzlesTotal}"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock>Ipsum:</TextBlock>
-                <TextBlock Text=""></TextBlock>
+                <TextBlock>Puzzles completed:</TextBlock>
+                <TextBlock Text="{Binding PuzzlesCompleted}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Next time penalty:</TextBlock>
+                <TextBlock Text="{Binding TimePenalty}"></TextBlock>
             </StackPanel>
         </StackPanel>
         <Frame x:Name="puzzleFrame" NavigationUIVisibility="Hidden" Grid.Row="2" Grid.Column="3" Grid.RowSpan="3" Background="Gray"></Frame>

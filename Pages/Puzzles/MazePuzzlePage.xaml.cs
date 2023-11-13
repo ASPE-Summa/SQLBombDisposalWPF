@@ -1,5 +1,4 @@
 ﻿using SQLBombDisposal.Models;
-using SQLBombDisposal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +42,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         }
 
         public event EventHandler<EventArgs> PuzzleCompleted;
-        public event EventHandler<EventArgs> TimePenalty;
+        public event EventHandler<EventArgs> Penalize;
 
         private void ResetMaze()
         {
@@ -107,7 +106,7 @@ namespace SQLBombDisposal.Pages.Puzzles
             }
 
             if(newXPos > maze[0].Count || newXPos < 0 || newYPos >= maze.Count || newYPos < 0 || maze[newYPos][newXPos] == wallCharacter) {
-                TimePenalty?.Invoke(this, EventArgs.Empty);
+                Penalize?.Invoke(this, EventArgs.Empty);
                 MessageBox.Show("Helaas de resterende tijd is verlaagd.");
                 ResetMaze();
                 return;

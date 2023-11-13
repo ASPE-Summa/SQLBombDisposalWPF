@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SQLBombDisposal.Pages.Puzzles
 {
-    internal interface IPuzzle
+    public interface IPuzzle
     {
         event EventHandler<EventArgs> PuzzleCompleted;
-        event EventHandler<EventArgs> TimePenalty;
+        event EventHandler<EventArgs> Penalize;
     }
 }
