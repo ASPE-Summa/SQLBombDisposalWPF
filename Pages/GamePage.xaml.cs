@@ -84,9 +84,10 @@ namespace SQLBombDisposal.Pages
 
         private void FillPuzzleList()
         {
-            //puzzles.Add(new MazePuzzlePage());
-            //puzzles.Add(new ButtonPuzzlePage());
+            puzzles.Add(new MazePuzzlePage());
+            puzzles.Add(new ButtonPuzzlePage());
             puzzles.Add(new BattleshipPuzzle());
+            puzzles.Add(new AdventurerPuzzle());
             Shuffler.Shuffle(puzzles);
         }
 
