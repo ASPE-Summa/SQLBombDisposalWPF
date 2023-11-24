@@ -3,8 +3,10 @@ using MySql.Data.MySqlClient;
 using SQLBombDisposal.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,16 +18,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SQLBombDisposal.Pages.Puzzles
 {
     /// <summary>
     /// Interaction logic for AdventurerPuzzle.xaml
     /// </summary>
-    public partial class AdventurerPuzzle : Page, IPuzzle
+    public partial class AdventurerPuzzle : Page, IPuzzle, INotifyPropertyChanged
     {
         public event EventHandler<EventArgs> PuzzleCompleted;
         public event EventHandler<EventArgs> Penalize;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private List<String> functions = new List<String>() { "MIN", "MAX", "COUNT", "SUM", "AVG" };
         private List<String> functionStrings = new List<String>() { "LOWEST", "HIGHEST", "HOW MANY", "TOTAL", "AVERAGE" };
@@ -41,6 +45,18 @@ namespace SQLBombDisposal.Pages.Puzzles
 
         private string questionString;
 
+        public string QuestionString 
+        {
+            get
+            {
+                return questionString;
+            }
+            set 
+            {
+                questionString = value; OnPropertyChanged();
+            }
+        }
+
         public AdventurerPuzzle()
         {
             InitializeComponent();
@@ -51,11 +67,15 @@ namespace SQLBombDisposal.Pages.Puzzles
             subject = subjects[rand.Next(subjects.Count)];
             targetNumber = rand.Next(1,21);
 
-            questionString = GenerateQuestion();
+            QuestionString = GenerateQuestion();
             solution = GetSolution();
 
-            MessageBox.Show(questionString);
-            MessageBox.Show(solution.ToString());
+            DataContext = this;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private string GenerateQuestion()
@@ -92,32 +112,57 @@ namespace SQLBombDisposal.Pages.Puzzles
 
         private string GenerateQuery()
         {
-            string query = $"SELECT {function.ToLower()}(";
-
-            query += function == "COUNT" ? "" : "";
             if(function == "COUNT")
             {
-                query += "id) FROM adventurer";
-            }
-            else
-            {
-                query += $"{subject.ToLower()}) FROM adventurer";
+                return generateSumQuery();
             }
 
-            if(function == "COUNT" && selector == "ADVENTURER")
-            {
-                query += $" WHERE {subject.ToLower()} = {targetNumber};";
-            }
-            else if(function == "COUNT")
-            {
-                query += $" WHERE {subject.ToLower()} = {targetNumber} AND class = '{selector.ToLower()}';";
-            }
-            else if(selector != "ADVENTURER")
+            string query = $"SELECT {function.ToLower()}({subject.ToLower()}) FROM adventurer";
+            if (selector != "ADVENTURER")
             {
                 query += $" WHERE class = '{selector.ToLower()}';";
             }
 
             return query;
+        }
+
+        private string generateSumQuery()
+        {
+            string query = $"SELECT {function.ToLower()}(id) FROM adventurer";
+            if (function == "COUNT" && selector == "ADVENTURER")
+            {
+                query += $" WHERE {subject.ToLower()} = {targetNumber};";
+            }
+            else if (function == "COUNT")
+            {
+                query += $" WHERE {subject.ToLower()} = {targetNumber} AND class = '{selector.ToLower()}';";
+            }
+            return query;
+        }
+
+        private void ProcessAnswer()
+        {
+            decimal answer = decimal.Parse(tbAnswer.Text);
+            if(answer == solution) {
+                PuzzleCompleted?.Invoke(this, new EventArgs());
+                return;
+            }
+
+            Penalize?.Invoke(this, new EventArgs());
+            MessageBox.Show($"Your answer: {answer} is incorrect! Penalty has been applied");
+        }
+
+        private void tbAnswer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                ProcessAnswer();
+            }
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessAnswer();
         }
     }
 }

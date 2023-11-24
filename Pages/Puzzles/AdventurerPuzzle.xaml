@@ -9,6 +9,29 @@
       Title="AdventurerPuzzle">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
+            <TextBlock Text="{Binding QuestionString}"></TextBlock></Viewbox>
+        <Image Source="\Assets\fantasy-adventurers.jpg" Stretch="Fill" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3"></Image>
+        <TextBox x:Name="tbAnswer" Grid.Row="5" Grid.Column="3" KeyDown="tbAnswer_KeyDown" Height="50" Background="WhiteSmoke" Foreground="Black"></TextBox>
+        <Button x:Name="btnSubmit" Grid.Column="5" Grid.Row="5" Click="btnSubmit_Click">Submit</Button>
     </Grid>
 </Page>

@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="Assets\bomb.png" />
+    <None Remove="Assets\fantasy-adventurers.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\bomb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\fantasy-adventurers.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
