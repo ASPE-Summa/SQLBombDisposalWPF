@@ -1,20 +1,9 @@
-﻿using Google.Protobuf.Collections;
-using Google.Protobuf.WellKnownTypes;
-using K4os.Compression.LZ4.Internal;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
-using MySqlX.XDevAPI.Common;
-using SQLBombDisposal.Models;
+﻿using SQLBombDisposal.Models;
 using System;
-using System.Diagnostics.Metrics;
 using System.Linq;
-using System.Numerics;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Typography.OpenFont.Tables;
 
 namespace SQLBombDisposal.Pages.Puzzles
 {

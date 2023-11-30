@@ -1,5 +1,4 @@
 ﻿using SQLBombDisposal.Classes;
-using SQLBombDisposal.Models;
 using SQLBombDisposal.Pages.Puzzles;
 using System;
 using System.Collections.Generic;
