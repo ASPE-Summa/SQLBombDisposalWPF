@@ -61,19 +61,19 @@ namespace SQLBombDisposal.Pages
         private List<IPuzzle> puzzles;
         private IPuzzle? puzzle = null;
 
-        public GamePage()
+        public GamePage(int iPuzzles, string strTime)
         {
             InitializeComponent();
 
             puzzles = new List<IPuzzle>();
 
-            FillPuzzleList();
-            LoadPuzzle();
-
-            PuzzlesTotal = 1;
+            PuzzlesTotal = iPuzzles;
             PuzzlesCompleted = 0;
             TimePenalty = 5;
-            CurrentTime = "05:00";
+            CurrentTime = strTime;
+
+            FillPuzzleList();
+            LoadPuzzle();
 
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
@@ -102,6 +102,7 @@ namespace SQLBombDisposal.Pages
                 dispatcherTimer.Stop();
 
                 MessageBox.Show("Boom");
+                NavigationService.GoBack();
             }
 
         }

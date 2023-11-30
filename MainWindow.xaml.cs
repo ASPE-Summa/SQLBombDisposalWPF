@@ -24,7 +24,7 @@ namespace SQLBombDisposal
         public MainWindow()
         {
             InitializeComponent();
-            mainFrame.NavigationService.Navigate(new GamePage());
+            mainFrame.NavigationService.Navigate(new ConfigPage());
         }
     }
 }
