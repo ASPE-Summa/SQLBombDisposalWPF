@@ -56,11 +56,12 @@ namespace SQLBombDisposal.Pages
         #endregion
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private TimeSpan elapsedTime = TimeSpan.Zero;
+        private TimeSpan totalTime = TimeSpan.Zero;
 
         private List<IPuzzle> puzzles;
         private IPuzzle? puzzle = null;
 
-        public GamePage(int iPuzzles, string strTime)
+        public GamePage(int iPuzzles, int minutes, int seconds)
         {
             InitializeComponent();
 
@@ -69,7 +70,9 @@ namespace SQLBombDisposal.Pages
             PuzzlesTotal = iPuzzles;
             PuzzlesCompleted = 0;
             TimePenalty = 5;
-            CurrentTime = strTime;
+
+            totalTime = TimeSpan.FromMinutes(minutes).Add(TimeSpan.FromSeconds(seconds));
+            CurrentTime = String.Format("{0:00}:{1:00}", totalTime.Minutes, totalTime.Seconds);
 
             FillPuzzleList();
             LoadPuzzle();
@@ -87,6 +90,7 @@ namespace SQLBombDisposal.Pages
             puzzles.Add(new ButtonPuzzlePage());
             puzzles.Add(new BattleshipPuzzle());
             puzzles.Add(new AdventurerPuzzle());
+            puzzles.Add(new StudentPuzzle());
             Shuffler.Shuffle(puzzles);
         }
 
@@ -101,7 +105,7 @@ namespace SQLBombDisposal.Pages
                 dispatcherTimer.Stop();
 
                 MessageBox.Show("Boom");
-                NavigationService.GoBack();
+                NavigationService.Navigate(new ConfigPage());
             }
 
         }

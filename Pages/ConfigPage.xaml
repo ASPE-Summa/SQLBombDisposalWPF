@@ -41,7 +41,7 @@
 
         <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <Label FontSize="26">Amount of Puzzles:</Label>
-            <Slider Minimum="1" Maximum="4" Value="{Binding PuzzleAmount}" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True"></Slider>
+            <Slider Minimum="1" Maximum="5" Value="{Binding PuzzleAmount}" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True"></Slider>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="3">

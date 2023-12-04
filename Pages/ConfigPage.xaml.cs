@@ -56,7 +56,7 @@ namespace SQLBombDisposal.Pages
             {
                 if (iMin <= 10 && iMin >= 1 && iSec <= 60 && iSec >= 0)
                 {
-                    NavigationService.Navigate(new GamePage(PuzzleAmount, $"{Minutes}:{Seconds}"));
+                    NavigationService.Navigate(new GamePage(PuzzleAmount, iMin, iSec));
                 }
                 return;
             }

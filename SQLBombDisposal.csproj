@@ -6,11 +6,16 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UserSecretsId>6a97e2b8-82cf-4568-b4c8-2688b83393e3</UserSecretsId>
+    <StartupObject>SQLBombDisposal.App</StartupObject>
+    <Platforms>AnyCPU;x86</Platforms>
+    <ApplicationIcon>faviconbomb.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\bomb.png" />
     <None Remove="Assets\fantasy-adventurers.jpg" />
+    <None Remove="Assets\faviconbomb.ico" />
+    <None Remove="Assets\students.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +25,13 @@
     <Content Include="Assets\fantasy-adventurers.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\faviconbomb.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\students.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="faviconbomb.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +48,12 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\Puzzles\StudentPuzzle.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
