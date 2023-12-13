@@ -30,7 +30,7 @@ namespace SQLBombDisposal.Pages.Puzzles
             InitializeComponent();
             maze = new List<List<char>>();
 
-            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 Random r = new Random();
                 int maxPattern = context.MazePuzzles.Max(p => p.Pattern) + 1;
@@ -47,7 +47,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         private void ResetMaze()
         {
             maze.Clear();
-            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 foreach (MazePuzzle row in context.MazePuzzles.Where(p => p.Pattern == pattern).OrderBy(p => p.Sequence))
                 {

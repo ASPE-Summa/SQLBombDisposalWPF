@@ -17,7 +17,7 @@ namespace SQLBombDisposal.Pages.Puzzles
     /// </summary>
     public partial class ButtonPuzzlePage : Page, IPuzzle
     {
-        private ObservableCollection<Models.Button> Buttons = new ObservableCollection<Models.Button>(); 
+        private ObservableCollection<Models.Button> Buttons = new ObservableCollection<Models.Button>();
         public ButtonPuzzlePage()
         {
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace SQLBombDisposal.Pages.Puzzles
          */
         public void LoadButtons()
         {
-            using(SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 List<Models.Button> dbButtons = new List<Models.Button>();
 
@@ -53,7 +53,7 @@ namespace SQLBombDisposal.Pages.Puzzles
                     .Take(6)
                     );
 
-                Shuffler.Shuffle( dbButtons );
+                Shuffler.Shuffle(dbButtons);
                 dbButtons.ForEach(Buttons.Add);
             }
         }
@@ -62,7 +62,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         {
             List<StackPanel> panels = buttonGrid.Children.Cast<StackPanel>().ToList();
             int index = 0;
-            foreach(StackPanel stackPanel in panels)
+            foreach (StackPanel stackPanel in panels)
             {
                 stackPanel.Background = Brushes.White;
                 System.Windows.Controls.Image i = stackPanel.Children.Cast<System.Windows.Controls.Image>().First();
@@ -78,7 +78,7 @@ namespace SQLBombDisposal.Pages.Puzzles
 
         private void ButtonClicked(object sender, MouseButtonEventArgs e)
         {
-            StackPanel stackPanel = (StackPanel) sender;
+            StackPanel stackPanel = (StackPanel)sender;
 
             Models.Button b = Buttons[buttonGrid.Children.IndexOf(stackPanel)];
             if (b.ButtonVoltage.Voltage == 0)

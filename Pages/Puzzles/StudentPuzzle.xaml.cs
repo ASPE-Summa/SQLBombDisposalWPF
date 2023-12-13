@@ -28,7 +28,6 @@ namespace SQLBombDisposal.Pages.Puzzles
         private Random rand;
         private string function;
         private string operation;
-        private string grade;
         private string subject;
         private string solution;
 
@@ -52,7 +51,6 @@ namespace SQLBombDisposal.Pages.Puzzles
             rand = new Random();
 
             function = functions[rand.Next(functions.Count)];
-            grade = grades[rand.Next(grades.Count)];
             subject = subjects[rand.Next(subjects.Count)];
             operation = operators[rand.Next(operators.Count)];
             QuestionString = GenerateQuestion();
@@ -73,8 +71,7 @@ namespace SQLBombDisposal.Pages.Puzzles
 
         private string GetSolution()
         {
-
-            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 var command = context.Database.GetDbConnection().CreateCommand();
 

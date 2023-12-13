@@ -79,7 +79,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         private decimal GetSolution()
         {
 
-            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 var command = context.Database.GetDbConnection().CreateCommand();
 
@@ -95,7 +95,6 @@ namespace SQLBombDisposal.Pages.Puzzles
 
                 return decimal.Parse(result.ToString());
             }
-
         }
 
         private string GenerateQuery()

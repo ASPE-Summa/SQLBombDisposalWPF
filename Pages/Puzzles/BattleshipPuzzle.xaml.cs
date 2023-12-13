@@ -1,4 +1,5 @@
-﻿using SQLBombDisposal.Models;
+﻿//using SQLBombDisposal.Models;
+using SQLBombDisposal.Models;
 using System;
 using System.Linq;
 using System.Windows;
@@ -51,7 +52,7 @@ namespace SQLBombDisposal.Pages.Puzzles
         {
             System.Windows.Controls.Button? battleshipButton = sender as System.Windows.Controls.Button;
             string content = battleshipButton.Content.ToString();
-            if(content == solution.Coordinates.ToString())
+            if (content == solution.Coordinates.ToString())
             {
                 PuzzleCompleted.Invoke(this, new EventArgs());
             }
@@ -66,7 +67,7 @@ namespace SQLBombDisposal.Pages.Puzzles
 
         private void SelectRandomPuzzle()
         {
-            using (SqlBombDisposalContext context = new SqlBombDisposalContext())
+            using (DataContext context = new DataContext())
             {
                 solution = context.Battleships.AsEnumerable().OrderBy(p => Guid.NewGuid()).First();
             }
