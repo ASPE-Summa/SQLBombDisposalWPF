@@ -138,9 +138,18 @@ namespace SQLBombDisposal.Pages
          */
         private void HandleCompletion(object? sender, EventArgs e)
         {
-            MessageBox.Show("Puzzle Completed");
             puzzlesCompleted++;
-            LoadPuzzle();
+            if(puzzlesCompleted == puzzlesTotal)
+            {
+                dispatcherTimer.Stop();
+                MessageBox.Show("Congratulations, you have succesfully disarmed the bomb!");
+                NavigationService.Navigate(new ConfigPage());
+            }
+            else
+            {
+                MessageBox.Show("Puzzle Completed, well done!");
+                LoadPuzzle();
+            }
         }
 
         private void HandleTimePenalty(object? sender, EventArgs e)
