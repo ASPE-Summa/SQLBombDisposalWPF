@@ -138,7 +138,8 @@ namespace SQLBombDisposal.Pages
          */
         private void HandleCompletion(object? sender, EventArgs e)
         {
-            MessageBox.Show("Recieved Completion Event");
+            MessageBox.Show("Puzzle Completed, well done!");
+            puzzlesCompleted++;
             LoadPuzzle();
         }
 
