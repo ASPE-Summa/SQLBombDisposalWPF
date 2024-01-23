@@ -97,7 +97,7 @@ namespace SQLBombDisposal.Pages
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             elapsedTime += dispatcherTimer.Interval;
-            TimeSpan ts = TimeSpan.FromMinutes(5).Subtract(elapsedTime);
+            TimeSpan ts = totalTime.Subtract(elapsedTime);
             CurrentTime = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
 
             if (ts.Minutes <= 0 && ts.Seconds <= 0)
